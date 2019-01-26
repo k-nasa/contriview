@@ -4,4 +4,6 @@ edition = "2018"
 name = "contrivirew"
 version = "0.1.0"
 [dependencies]
+failure = "*"
 reqwest = "*"
+scraper = "*"

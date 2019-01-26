@@ -26,14 +26,15 @@ impl ContriView {
         let selector = Selector::parse(r#"rect[data-date]"#).unwrap();
         let input = doc.select(&selector);
 
-        input
+        let contributions: Vec<u32> = input
             .into_iter()
-            .take(7)
             .map(|i| -> u32 {
                 let contribution = i.value().attr("data-count").unwrap();
                 contribution.parse().unwrap_or_default()
             })
-            .sum()
+            .collect();
+
+        contributions.iter().rev().take(7).sum()
     }
 }
 

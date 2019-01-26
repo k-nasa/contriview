@@ -47,4 +47,9 @@ mod tests {
             ContriView::sum_contributions_from_html(&sample_html()),
         )
     }
+
+    #[test]
+    fn test_week_contributions() {
+        assert_eq!(17, ContriView::week_contributions_from_html(&sample_html()),)
+    }
 }

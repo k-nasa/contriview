@@ -90,4 +90,11 @@ mod tests {
         assert_eq!(3, ContriView::today_contributions_from_html(&sample_html()),)
     }
 
+    #[test]
+    fn test_month_contributions() {
+        assert_eq!(
+            260,
+            ContriView::month_contributions_from_html(&sample_html()),
+        )
+    }
 }

@@ -25,4 +25,12 @@ mod tests {
             }
         )
     }
+
+    #[test]
+    fn test_sum_contributions() {
+        assert_eq!(
+            3532,
+            ContriView::sum_contributions_from_html(&sample_html()),
+        )
+    }
 }

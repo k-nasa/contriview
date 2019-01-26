@@ -11,6 +11,21 @@ pub struct ContriView {
 }
 
 impl ContriView {
+    pub fn from_html(html: &str) -> Result<Self, Error> {
+        let sum_contributions = Self::sum_contributions_from_html(html);
+        let today_contributions = Self::today_contributions_from_html(html);
+        let week_contributions = Self::week_contributions_from_html(html);
+        let month_contributions = Self::month_contributions_from_html(html);
+
+        Ok(ContriView {
+            sum_contributions,
+            week_contributions,
+            month_contributions,
+            today_contributions,
+        })
+    }
+
+    // FIXME use Result
     fn sum_contributions_from_html(html: &str) -> u32 {
         let doc = Html::parse_document(&html);
         let selector = Selector::parse(r#"rect[data-date]"#).unwrap();
@@ -91,6 +106,18 @@ mod tests {
                 week_contributions: 0,
                 month_contributions: 0,
                 sum_contributions: 0
+            }
+        )
+    }
+    #[test]
+    fn test_from_html() {
+        assert_eq!(
+            ContriView::from_html(&sample_html()).unwrap(),
+            ContriView {
+                sum_contributions: 3532,
+                month_contributions: 260,
+                week_contributions: 51,
+                today_contributions: 3
             }
         )
     }

@@ -65,6 +65,6 @@ mod tests {
 
     #[test]
     fn test_week_contributions() {
-        assert_eq!(17, ContriView::week_contributions_from_html(&sample_html()),)
+        assert_eq!(51, ContriView::week_contributions_from_html(&sample_html()),)
     }
 }

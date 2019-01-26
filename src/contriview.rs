@@ -11,6 +11,7 @@ impl ContriView {}
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::test_support::*;
 
     #[test]
     fn contriview_default() {

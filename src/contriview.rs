@@ -1,3 +1,7 @@
+use chrono::*;
+use failure::Error;
+use scraper::*;
+
 #[derive(Debug, Default, PartialEq, Eq)]
 pub struct ContriView {
     today_contributions: u32,
@@ -35,6 +39,18 @@ impl ContriView {
             .collect();
 
         contributions.iter().rev().take(7).sum()
+    }
+
+    fn today_contributions_from_html(html: &str) -> u32 {
+        let doc = Html::parse_document(&html);
+
+        let now = Local::now().format("%Y-%m-%d").to_string();
+        let selector = format!("rect[data-date=\"{}\"]", now);
+
+        let selector = Selector::parse(&selector).unwrap();
+        let input = doc.select(&selector).next().unwrap();
+
+        input.value().attr("data-count").unwrap().parse().unwrap()
     }
 }
 

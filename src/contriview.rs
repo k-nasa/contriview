@@ -6,7 +6,21 @@ pub struct ContriView {
     sum_contributions: u32,
 }
 
-impl ContriView {}
+impl ContriView {
+    fn sum_contributions_from_html(html: &str) -> u32 {
+        let doc = Html::parse_document(&html);
+        let selector = Selector::parse(r#"rect[data-date]"#).unwrap();
+        let input = doc.select(&selector);
+
+        input
+            .into_iter()
+            .map(|i| -> u32 {
+                let contribution = i.value().attr("data-count").unwrap();
+                contribution.parse().unwrap_or_default()
+            })
+            .sum()
+    }
+}
 
 #[cfg(test)]
 mod tests {

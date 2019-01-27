@@ -1,14 +1,14 @@
 mod contriview;
 
 use crate::contriview::ContriView;
+use clap::*;
 use reqwest::*;
 
 fn main() {
-    // clapにしても良いかもね
-    let username = std::env::args().nth(1).unwrap_or_else(|| {
-        eprintln!("Please input username");
-        std::process::exit(1);
-    });
+    let matches = app().get_matches();
+
+    let username = matches.value_of("username").unwrap();
+
     let url = format!("https://github.com/users/{}/contributions", username);
 
     let client = Client::new();
@@ -16,4 +16,10 @@ fn main() {
     let html = resp.text().unwrap();
 
     println!("{:?}", ContriView::from_html(&html).unwrap())
+}
+
+fn app() -> App<'static, 'static> {
+    App::new(crate_name!())
+        .version(crate_version!())
+        .arg(Arg::with_name("username").required(true))
 }

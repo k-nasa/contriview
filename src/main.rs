@@ -1,6 +1,8 @@
 mod contriview;
+mod test_support;
 
 use crate::contriview::ContriView;
+use chrono::*;
 use clap::*;
 use reqwest::*;
 
@@ -15,7 +17,8 @@ fn main() {
     let mut resp = client.get(&url).send().unwrap();
     let html = resp.text().unwrap();
 
-    println!("{:?}", ContriView::from_html(&html).unwrap())
+    let now = Local::now();
+    println!("{:?}", ContriView::from_html(&html, now).unwrap())
 }
 
 fn app() -> App<'static, 'static> {

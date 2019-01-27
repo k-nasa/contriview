@@ -11,11 +11,11 @@ pub struct ContriView {
 }
 
 impl ContriView {
-    pub fn from_html(html: &str) -> Result<Self, Error> {
+    pub fn from_html(html: &str, date: DateTime<Local>) -> Result<Self, Error> {
         let sum_contributions = Self::sum_contributions_from_html(html);
-        let today_contributions = Self::today_contributions_from_html(html);
+        let today_contributions = Self::today_contributions_from_html(html, date);
         let week_contributions = Self::week_contributions_from_html(html);
-        let month_contributions = Self::month_contributions_from_html(html);
+        let month_contributions = Self::month_contributions_from_html(html, date);
 
         Ok(ContriView {
             sum_contributions,
@@ -41,10 +41,10 @@ impl ContriView {
     }
 
     // FIXME use Result
-    fn month_contributions_from_html(html: &str) -> u32 {
+    fn month_contributions_from_html(html: &str, date: DateTime<Local>) -> u32 {
         let doc = Html::parse_document(&html);
 
-        let now = Local::now().format("%Y-%m").to_string();
+        let now = date.format("%Y-%m").to_string();
         let selector = format!("rect[data-date^=\"{}\"]", now);
 
         let selector = Selector::parse(&selector).unwrap();
@@ -79,16 +79,21 @@ impl ContriView {
     }
 
     // FIXME use Result
-    fn today_contributions_from_html(html: &str) -> u32 {
+    fn today_contributions_from_html(html: &str, date: DateTime<Local>) -> u32 {
         let doc = Html::parse_document(&html);
 
-        let now = Local::now().format("%Y-%m-%d").to_string();
+        let now = date.format("%Y-%m-%d").to_string();
         let selector = format!("rect[data-date=\"{}\"]", now);
 
         let selector = Selector::parse(&selector).unwrap();
         let input = doc.select(&selector).next().unwrap();
 
-        input.value().attr("data-count").unwrap().parse().unwrap()
+        input
+            .value()
+            .attr("data-count")
+            .unwrap()
+            .parse()
+            .unwrap_or_default()
     }
 }
 
@@ -111,8 +116,10 @@ mod tests {
     }
     #[test]
     fn test_from_html() {
+        let date = Local.ymd(2019, 1, 26).and_hms_milli(9, 10, 11, 12);
+
         assert_eq!(
-            ContriView::from_html(&sample_html()).unwrap(),
+            ContriView::from_html(&sample_html(), date).unwrap_or_default(),
             ContriView {
                 sum_contributions: 3532,
                 month_contributions: 260,
@@ -132,19 +139,26 @@ mod tests {
 
     #[test]
     fn test_week_contributions() {
-        assert_eq!(51, ContriView::week_contributions_from_html(&sample_html()),)
+        assert_eq!(51, ContriView::week_contributions_from_html(&sample_html()))
     }
 
     #[test]
     fn test_today_contributions() {
-        assert_eq!(3, ContriView::today_contributions_from_html(&sample_html()),)
+        let date = Local.ymd(2019, 1, 26).and_hms_milli(9, 10, 11, 12);
+
+        assert_eq!(
+            3,
+            ContriView::today_contributions_from_html(&sample_html(), date)
+        )
     }
 
     #[test]
     fn test_month_contributions() {
+        let date = Local.ymd(2019, 1, 26).and_hms_milli(9, 10, 11, 12);
+
         assert_eq!(
             260,
-            ContriView::month_contributions_from_html(&sample_html()),
+            ContriView::month_contributions_from_html(&sample_html(), date)
         )
     }
 }

@@ -9,7 +9,13 @@ use reqwest::*;
 fn main() {
     let matches = app().get_matches();
 
-    let username = matches.value_of("username").unwrap();
+    let username = match matches.value_of("username") {
+        None => {
+            app().print_help().unwrap();
+            return;
+        }
+        Some(u) => u,
+    };
 
     let url = format!("https://github.com/users/{}/contributions", username);
 

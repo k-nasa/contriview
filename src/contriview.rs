@@ -11,7 +11,7 @@ pub struct ContriView {
 }
 
 impl ContriView {
-    pub fn from_html(html: &str, date: DateTime<Local>) -> Result<Self, Error> {
+    pub fn from_html(html: &str, date: Date<Local>) -> Result<Self, Error> {
         let sum_contributions = Self::sum_contributions_from_html(html);
         let today_contributions = Self::today_contributions_from_html(html, date);
         let week_contributions = Self::week_contributions_from_html(html);
@@ -41,7 +41,7 @@ impl ContriView {
     }
 
     // FIXME use Result
-    fn month_contributions_from_html(html: &str, date: DateTime<Local>) -> u32 {
+    fn month_contributions_from_html(html: &str, date: Date<Local>) -> u32 {
         let doc = Html::parse_document(&html);
 
         let now = date.format("%Y-%m").to_string();
@@ -79,7 +79,7 @@ impl ContriView {
     }
 
     // FIXME use Result
-    fn today_contributions_from_html(html: &str, date: DateTime<Local>) -> u32 {
+    fn today_contributions_from_html(html: &str, date: Date<Local>) -> u32 {
         let doc = Html::parse_document(&html);
 
         let now = date.format("%Y-%m-%d").to_string();
@@ -116,7 +116,7 @@ mod tests {
     }
     #[test]
     fn test_from_html() {
-        let date = Local.ymd(2019, 1, 26).and_hms_milli(9, 10, 11, 12);
+        let date = Local.ymd(2019, 1, 26);
 
         assert_eq!(
             ContriView::from_html(&sample_html(), date).unwrap_or_default(),
@@ -144,7 +144,7 @@ mod tests {
 
     #[test]
     fn test_today_contributions() {
-        let date = Local.ymd(2019, 1, 26).and_hms_milli(9, 10, 11, 12);
+        let date = Local.ymd(2019, 1, 26);
 
         assert_eq!(
             3,
@@ -154,7 +154,7 @@ mod tests {
 
     #[test]
     fn test_month_contributions() {
-        let date = Local.ymd(2019, 1, 26).and_hms_milli(9, 10, 11, 12);
+        let date = Local.ymd(2019, 1, 26);
 
         assert_eq!(
             260,

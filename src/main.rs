@@ -17,12 +17,28 @@ fn main() {
     let mut resp = client.get(&url).send().unwrap();
     let html = resp.text().unwrap();
 
-    let now = Local::now();
-    println!("{:?}", ContriView::from_html(&html, now).unwrap())
+    let date = match matches.value_of("date") {
+        Some(d) => date_from_string(d),
+        None => Local::today(),
+    };
+
+    println!("{:?}", ContriView::from_html(&html, date).unwrap())
 }
 
 fn app() -> App<'static, 'static> {
     App::new(crate_name!())
         .version(crate_version!())
         .arg(Arg::with_name("username").required(true))
+        .arg(
+            Arg::with_name("date")
+                .help("date")
+                .value_name("date")
+                .short("d"),
+        )
+}
+
+fn date_from_string(date: &str) -> Date<Local> {
+    let v: Vec<u32> = date.split('-').map(|v| v.parse::<u32>().unwrap()).collect();
+
+    Local.ymd(v[0] as i32, v[1], v[2])
 }

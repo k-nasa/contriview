@@ -109,9 +109,14 @@ impl ContriView {
         let selector = format!("rect[data-date=\"{}\"]", now);
 
         let selector = Selector::parse(&selector).unwrap();
-        let input = doc.select(&selector).next().unwrap();
+        let input = doc.select(&selector).next();
+
+        if input.is_none() {
+            return 0;
+        }
 
         input
+            .unwrap()
             .value()
             .attr("data-count")
             .unwrap()

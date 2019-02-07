@@ -3,7 +3,8 @@ authors = ["nasa <htilcs1115@gmail.com>"]
 edition = "2018"
 name = "contriview"
 description = "contriview"
-license = "LICENSE"
+repository = "https://github.com/k-nasa/contriview"
+license-file = "LICENSE"
 version = "0.1.0"
 
 [dependencies]

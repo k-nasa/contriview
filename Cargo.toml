@@ -2,7 +2,10 @@
 authors = ["nasa <htilcs1115@gmail.com>"]
 edition = "2018"
 name = "contriview"
+description = "contriview"
+license = "LICENSE"
 version = "0.1.0"
+
 [dependencies]
 chrono = "0.4.6"
 clap = "2.32"

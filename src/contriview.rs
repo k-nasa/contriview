@@ -8,6 +8,9 @@ pub struct ContriView {
     week_contributions: u32,
     month_contributions: u32,
     year_contributions: u32,
+    week_ave: u32,
+    month_ave: u32,
+    sum_ave: u32,
     sum_contributions: u32,
 }
 
@@ -18,6 +21,9 @@ impl ContriView {
         let year_contributions = Self::year_contributions_from_html(html, date);
         let month_contributions = Self::month_contributions_from_html(html, date);
         let today_contributions = Self::today_contributions_from_html(html, date);
+        let week_ave = week_contributions / 7;
+        let month_ave = month_contributions / date.day();
+        let sum_ave = sum_contributions / 365;
 
         Ok(ContriView {
             sum_contributions,
@@ -25,6 +31,9 @@ impl ContriView {
             month_contributions,
             year_contributions,
             today_contributions,
+            week_ave,
+            month_ave,
+            sum_ave,
         })
     }
 
@@ -139,7 +148,10 @@ mod tests {
                 week_contributions: 0,
                 year_contributions: 0,
                 month_contributions: 0,
-                sum_contributions: 0
+                sum_contributions: 0,
+                week_ave: 0,
+                month_ave: 0,
+                sum_ave: 0,
             }
         )
     }
@@ -154,7 +166,10 @@ mod tests {
                 month_contributions: 260,
                 year_contributions: 260,
                 week_contributions: 51,
-                today_contributions: 3
+                today_contributions: 3,
+                week_ave: 7,
+                month_ave: 10,
+                sum_ave: 9,
             }
         )
     }

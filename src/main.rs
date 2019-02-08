@@ -28,7 +28,7 @@ fn main() {
         None => Local::today(),
     };
 
-    println!("{:?}", ContriView::from_html(&html, date).unwrap())
+    println!("{}", ContriView::from_html(&html, date).unwrap())
 }
 
 fn app() -> App<'static, 'static> {

@@ -14,6 +14,30 @@ pub struct ContriView {
     sum_contributions: u32,
 }
 
+impl std::fmt::Display for ContriView {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(
+            f,
+            "today_contributions: {}
+week_contributions: {}
+month_contributions: {}
+year_contributions: {}
+sum_contributions: {}
+week_ave: {}
+month_ave: {}
+sum_ave: {}",
+            self.today_contributions,
+            self.week_contributions,
+            self.month_contributions,
+            self.year_contributions,
+            self.sum_contributions,
+            self.week_ave,
+            self.month_ave,
+            self.sum_ave
+        )
+    }
+}
+
 impl ContriView {
     pub fn from_html(html: &str, date: Date<Local>) -> Result<Self, Error> {
         let sum_contributions = Self::sum_contributions_from_html(html);

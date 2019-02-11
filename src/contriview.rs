@@ -61,7 +61,6 @@ impl ContriView {
         })
     }
 
-    // FIXME use Result
     fn sum_contributions_from_html(html: &str) -> u32 {
         let doc = Html::parse_document(&html);
         let selector = Selector::parse(r#"rect[data-date]"#).unwrap();
@@ -76,7 +75,6 @@ impl ContriView {
             .sum()
     }
 
-    // FIXME use Result
     fn month_contributions_from_html(html: &str, date: Date<Local>) -> u32 {
         let doc = Html::parse_document(&html);
 
@@ -97,7 +95,6 @@ impl ContriView {
         contributions.iter().sum()
     }
 
-    // FIXME use Result
     fn week_contributions_from_html(html: &str) -> u32 {
         let doc = Html::parse_document(&html);
         let selector = Selector::parse(r#"rect[data-date]"#).unwrap();
@@ -134,7 +131,6 @@ impl ContriView {
         contributions.iter().sum()
     }
 
-    // FIXME use Result
     fn today_contributions_from_html(html: &str, date: Date<Local>) -> u32 {
         let doc = Html::parse_document(&html);
 

@@ -67,7 +67,6 @@ impl ContriView {
         let input = doc.select(&selector);
 
         input
-            .into_iter()
             .map(|i| -> u32 {
                 let contribution = i.value().attr("data-count").unwrap();
                 contribution.parse().unwrap_or_default()
@@ -85,7 +84,6 @@ impl ContriView {
         let input = doc.select(&selector);
 
         let contributions: Vec<u32> = input
-            .into_iter()
             .map(|i| -> u32 {
                 let contribution = i.value().attr("data-count").unwrap();
                 contribution.parse().unwrap_or_default()
@@ -101,7 +99,6 @@ impl ContriView {
         let input = doc.select(&selector);
 
         let contributions: Vec<u32> = input
-            .into_iter()
             .map(|i| -> u32 {
                 let contribution = i.value().attr("data-count").unwrap();
                 contribution.parse().unwrap_or_default()
@@ -121,7 +118,6 @@ impl ContriView {
         let input = doc.select(&selector);
 
         let contributions: Vec<u32> = input
-            .into_iter()
             .map(|i| -> u32 {
                 let contribution = i.value().attr("data-count").unwrap();
                 contribution.parse().unwrap_or_default()

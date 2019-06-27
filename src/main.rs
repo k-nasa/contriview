@@ -20,7 +20,14 @@ fn main() {
     let url = format!("https://github.com/users/{}/contributions", username);
 
     let client = Client::new();
-    let mut resp = client.get(&url).send().unwrap();
+    let mut resp = match client.get(&url).send() {
+        Ok(res) => res,
+        Err(e) => {
+            println!("Failed fetch from {}", url);
+            return;
+        }
+    };
+
     let html = resp.text().unwrap();
 
     let date = match matches.value_of("date") {

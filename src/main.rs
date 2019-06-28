@@ -22,7 +22,7 @@ fn main() {
     let client = Client::new();
     let mut resp = match client.get(&url).send() {
         Ok(res) => res,
-        Err(e) => {
+        Err(_) => {
             println!("Failed fetch from {}", url);
             return;
         }

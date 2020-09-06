@@ -5,7 +5,7 @@ name = "contriview"
 description = "contriview"
 repository = "https://github.com/k-nasa/contriview"
 license-file = "LICENSE"
-version = "0.2.0"
+version = "0.2.1"
 
 [dependencies]
 chrono = "0.4.11"

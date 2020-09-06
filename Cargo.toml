@@ -8,8 +8,8 @@ license-file = "LICENSE"
 version = "0.2.0"
 
 [dependencies]
-chrono = "0.4.6"
-clap = "2.32"
-failure = "0.1"
-reqwest = "0.9"
-scraper = "0.9"
+chrono = "0.4.11"
+clap = "2.33.0"
+failure = "0.1.7"
+reqwest = { version = "0.10.4", features = ["blocking"] }
+scraper = "0.11.0"

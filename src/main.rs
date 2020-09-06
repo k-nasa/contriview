@@ -4,7 +4,7 @@ mod test_support;
 use crate::contriview::ContriView;
 use chrono::*;
 use clap::*;
-use reqwest::*;
+use reqwest::blocking::Client;
 
 fn main() {
     let matches = app().get_matches();
@@ -20,7 +20,7 @@ fn main() {
     let url = format!("https://github.com/users/{}/contributions", username);
 
     let client = Client::new();
-    let mut resp = match client.get(&url).send() {
+    let resp = match client.get(&url).send() {
         Ok(res) => res,
         Err(_) => {
             println!("Failed fetch from {}", url);

@@ -9,7 +9,7 @@ version = "0.2.1"
 
 [dependencies]
 chrono = "0.4.19"
-clap = "2.34.0"
+clap = "3.2.17"
 failure = "0.1.8"
 reqwest = { version = "0.11.10", features = ["blocking"] }
 scraper = "0.13.0"
